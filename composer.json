@@ -1,0 +1,18 @@
+{
+    "name": "andrewklau/socialite-openshift",
+    "description": "OpenShift OAuth2 Provider for Laravel Socialite",
+    "license": "MIT",
+    "authors": [{
+        "name": "Andrew Lau",
+        "email": "andrew@andrewklau.com"
+    }],
+    "require": {
+        "php": ">=5.5.9",
+        "socialiteproviders/manager": "2.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Andrewklau\\Socialite\\OpenShift\\": "src/"
+        }
+    }
+}
