@@ -66,6 +66,21 @@ You do not need to add this if you add the values to the `.env` exactly as shown
 ],
 ```
 
+### Create OpenShift oAuth Client
+
+```sh
+oc create -f <(echo '
+kind: OAuthClient
+apiVersion: v1
+metadata:
+ name: laravel
+secret: "..."
+redirectURIs:
+ - "https://localhost/login/callback"
+grantMethod: prompt
+')
+```
+
 ## Usage
 
 Redirect to OpenShift with the scopes you want to access:
