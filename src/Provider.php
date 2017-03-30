@@ -2,6 +2,7 @@
 
 namespace Andrewklau\Socialite\OpenShift;
 
+use GuzzleHttp\Client;
 use Laravel\Socialite\Two\ProviderInterface;
 use SocialiteProviders\Manager\OAuth2\AbstractProvider;
 use SocialiteProviders\Manager\OAuth2\User;
@@ -14,9 +15,31 @@ class Provider extends AbstractProvider implements ProviderInterface
     const IDENTIFIER = 'OPENSHIFT';
 
     /**
+     * The HTTP Client instance.
+     *
+     * @var \GuzzleHttp\Client
+     */
+    protected $httpClient;
+
+    /**
      * {@inheritdoc}
      */
     protected $scopes = [];
+
+    /**
+     * Get a instance of the Guzzle HTTP client.
+     *
+     * @return \GuzzleHttp\Client
+     */
+    protected function getHttpClient()
+    {
+        if (is_null($this->httpClient)) {
+            $this->httpClient = new Client([
+                'verify'   => config('services.openshift.ca') ?: '',
+            ]);
+        }
+        return $this->httpClient;
+    }
 
     /**
      * Get the authentication URL for the provider.
@@ -52,8 +75,9 @@ class Provider extends AbstractProvider implements ProviderInterface
         $url = config('services.openshift.url').'oapi/v1/users/~';
 
         $response = $this->getHttpClient()->get($url, [
-          'headers' => [
-            'Accept' => 'application/json',
+          'verify'   => config('services.openshift.ca') ?: '',
+          'headers'  => [
+            'Accept'        => 'application/json',
             'Authorization' => 'Bearer '.$token,
           ],
         ]);

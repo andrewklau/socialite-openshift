@@ -49,6 +49,7 @@ If you add environment values to your `.env` as exactly shown below, you do not 
 ```
 // other values above
 OPENSHIFT_URL=https://api.xyz.com
+OPENSHIFT_CA=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
 OPENSHIFT_OAUTH_CLIENT_ID=yourkeyfortheservice
 OPENSHIFT_OAUTH_CLIENT_SECRET=yoursecretfortheservice
 ```
@@ -62,6 +63,7 @@ You do not need to add this if you add the values to the `.env` exactly as shown
     'client_id'     => env('OPENSHIFT_OAUTH_CLIENT_ID'),
     'client_secret' => env('OPENSHIFT_OAUTH_CLIENT_SECRET'),
     'url'           => env('OPENSHIFT_URL'),
+    'ca'            => env('OPENSHIFT_CA'),
     'redirect'      => env('APP_URL').'/login/callback',
 ],
 ```
