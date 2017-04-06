@@ -35,7 +35,7 @@ class Provider extends AbstractProvider implements ProviderInterface
     {
         if (is_null($this->httpClient)) {
             $this->httpClient = new Client([
-                'verify'   => config('services.openshift.ca') ?: '',
+                'verify'   => config('services.openshift.ca') ?: true,
             ]);
         }
         return $this->httpClient;
@@ -75,7 +75,7 @@ class Provider extends AbstractProvider implements ProviderInterface
         $url = config('services.openshift.url').'oapi/v1/users/~';
 
         $response = $this->getHttpClient()->get($url, [
-          'verify'   => config('services.openshift.ca') ?: '',
+          'verify'   => config('services.openshift.ca') ?: true,
           'headers'  => [
             'Accept'        => 'application/json',
             'Authorization' => 'Bearer '.$token,
